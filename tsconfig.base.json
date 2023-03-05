@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@kickstart/nest/user": ["libs/nest/user/src/index.ts"]
+      "@libs/nest/user": ["libs/nest/user/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
