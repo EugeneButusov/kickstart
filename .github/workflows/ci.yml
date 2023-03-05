@@ -39,13 +39,7 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: |
-          if [[ -v ACTIONS_RUNNER_DEBUG ]];
-          then
-            pnpm install --frozen-lockfile;
-          else
-            pnpm install --frozen-lockfile &> /dev/null
-          fi
+        run: pnpm install --frozen-lockfile
       - name: Set nx output
         id: set-nx-output
         run: |
@@ -70,13 +64,7 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: |
-          if [[ -v ACTIONS_RUNNER_DEBUG ]];
-          then
-            pnpm install --frozen-lockfile;
-          else
-            pnpm install --frozen-lockfile &> /dev/null
-          fi
+        run: pnpm install --frozen-lockfile
       - name: Run ESLint
         run: npx nx affected --target=lint --parallel=3
   tests:
@@ -96,13 +84,7 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: |
-          if [[ -v ACTIONS_RUNNER_DEBUG ]];
-          then
-            pnpm install --frozen-lockfile;
-          else
-            pnpm install --frozen-lockfile &> /dev/null
-          fi
+        run: pnpm install --frozen-lockfile
       - name: Run test
         run: npx nx affected --target=test --parallel=1
   check-types:
@@ -119,13 +101,7 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: |
-          if [[ -v ACTIONS_RUNNER_DEBUG ]];
-          then
-            pnpm install --frozen-lockfile;
-          else
-            pnpm install --frozen-lockfile &> /dev/null
-          fi
+        run: pnpm install --frozen-lockfile
       - run: npx tsc -v
       - name: Check app
         run: tsc --project ./apps/kickstart/tsconfig.app.json --noEmit
