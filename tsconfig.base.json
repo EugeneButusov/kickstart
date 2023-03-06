@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@kickstart/nest/auth": ["libs/nest/auth/src/index.ts"],
       "@libs/nest/user": ["libs/nest/user/src/index.ts"]
     }
   },
