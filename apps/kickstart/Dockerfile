@@ -10,7 +10,6 @@ COPY pnpm-lock.yaml ./
 COPY dist/apps/kickstart .
 RUN chown -R kickstart:kickstart .
 
-RUN apk add --no-cache git make g++ python3
 RUN npm install -g pnpm
 RUN pnpm install --prod
 
