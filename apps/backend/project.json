@@ -1,7 +1,7 @@
 {
-  "name": "kickstart",
+  "name": "kickstart-backend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/kickstart/src",
+  "sourceRoot": "/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -12,14 +12,14 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/kickstart",
-        "main": "apps/kickstart/src/main.ts",
-        "tsConfig": "apps/kickstart/tsconfig.app.json",
+        "outputPath": "dist/apps/backend",
+        "main": "apps/backend/src/main.ts",
+        "tsConfig": "apps/backend/tsconfig.app.json",
         "assets": [
-          "apps/kickstart/src/assets"
+          "apps/backend/src/assets"
         ],
         "isolatedConfig": true,
-        "webpackConfig": "apps/kickstart/webpack.config.js"
+        "webpackConfig": "apps/backend/webpack.config.js"
       },
       "configurations": {
         "production": {
@@ -33,16 +33,16 @@
       "dependsOn": [
         "build"
       ],
-      "command": "docker build -f apps/kickstart/Dockerfile . -t kickstart"
+      "command": "docker build -f apps/backend/Dockerfile . -t kickstart-backend"
     },
     "serve": {
       "executor": "@nrwl/js:node",
       "options": {
-        "buildTarget": "kickstart:build"
+        "buildTarget": "backend:build"
       },
       "configurations": {
         "production": {
-          "buildTarget": "kickstart:build:production"
+          "buildTarget": "backend:build:production"
         }
       }
     },
@@ -53,7 +53,7 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "apps/kickstart/**/*.ts"
+          "apps/backend/**/*.ts"
         ]
       }
     },
@@ -63,7 +63,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "apps/kickstart/jest.config.ts",
+        "jestConfig": "apps/backend/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
