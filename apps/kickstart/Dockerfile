@@ -1,21 +1,11 @@
-FROM node:18.14.2-alpine as builder
+FROM docker.io/node:lts-alpine
 
 WORKDIR /app
 
-COPY package.json ./
-COPY pnpm-lock.yaml ./
-COPY tsconfig.base.json ./
-COPY nx.json ./
-COPY libs ./libs
-COPY apps/kickstart ./apps/kickstart
+RUN addgroup --system kickstart && \
+          adduser --system -G kickstart kickstart
 
-RUN apk add --no-cache git make g++ python3
-RUN npm install -g pnpm
-RUN pnpm install --prod
+COPY dist/kickstart kickstart
+RUN chown -R kickstart:kickstart .
 
-FROM node:18.14.2-alpine
-
-COPY --from=builder /app /app
-WORKDIR /app
-
-CMD ["npx", "nx", "serve", "kickstart"]
+CMD [ "node", "kickstart" ]
