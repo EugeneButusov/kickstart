@@ -5,7 +5,13 @@ WORKDIR /app
 RUN addgroup --system kickstart
 RUN adduser --system -G kickstart kickstart
 
-COPY dist/apps/kickstart kickstart
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+COPY dist/apps/kickstart .
 RUN chown -R kickstart:kickstart .
 
-CMD [ "node", "kickstart/main" ]
+RUN apk add --no-cache git make g++ python3
+RUN npm install -g pnpm
+RUN pnpm install --prod
+
+CMD [ "node", "main" ]
