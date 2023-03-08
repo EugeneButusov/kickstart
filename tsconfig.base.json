@@ -18,8 +18,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@libs/nest/users": [
-        "libs/nest/users/src/index.ts"
+      "@libs/nest/users/*": [
+        "libs/nest/users/src/*"
       ]
     }
   },
