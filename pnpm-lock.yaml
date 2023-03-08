@@ -7,6 +7,7 @@ specifiers:
   '@nestjs/schematics': ^9.0.0
   '@nestjs/swagger': ^6.2.1
   '@nestjs/testing': ^9.0.0
+  '@nrwl/cli': 15.8.5
   '@nrwl/eslint-plugin-nx': 15.8.5
   '@nrwl/jest': 15.8.5
   '@nrwl/js': 15.8.5
@@ -46,6 +47,7 @@ dependencies:
 devDependencies:
   '@nestjs/schematics': 9.0.4_typescript@4.9.5
   '@nestjs/testing': 9.3.9_yqmogfxzeu633isbftgaoi4ho4
+  '@nrwl/cli': 15.8.5
   '@nrwl/eslint-plugin-nx': 15.8.5_s6eozg7tx22qnpfh43bfcdlkbm
   '@nrwl/jest': 15.8.5_fx65xjiidphcfod5l4x2wrh2k4
   '@nrwl/js': 15.8.5_yk2c36l5uqszanjdlinzih77ha
