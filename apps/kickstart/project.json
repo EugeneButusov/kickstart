@@ -33,7 +33,7 @@
       "dependsOn": [
         "build"
       ],
-      "command": "docker build -f kickstart/Dockerfile . -t kickstart"
+      "command": "docker build -f apps/kickstart/Dockerfile . -t kickstart"
     },
     "serve": {
       "executor": "@nrwl/js:node",
