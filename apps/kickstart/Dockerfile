@@ -8,4 +8,4 @@ RUN adduser --system -G kickstart kickstart
 COPY dist/apps/kickstart kickstart
 RUN chown -R kickstart:kickstart .
 
-CMD [ "node", "kickstart" ]
+CMD [ "node", "kickstart/main" ]
