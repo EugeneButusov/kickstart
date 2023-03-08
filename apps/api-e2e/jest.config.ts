@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'kickstart-e2e',
+  displayName: 'api-e2e',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -15,5 +15,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/kickstart-e2e',
+  coverageDirectory: '../../coverage/api-e2e',
 };
