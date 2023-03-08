@@ -21,12 +21,6 @@
         "isolatedConfig": true,
         "webpackConfig": "apps/kickstart/webpack.config.js"
       },
-      "docker-build": {
-        "dependsOn": [
-          "build"
-        ],
-        "command": "docker build -f kickstart/Dockerfile . -t kickstart"
-      },
       "configurations": {
         "production": {
           "optimization": true,
@@ -34,6 +28,12 @@
           "inspect": false
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": [
+        "build"
+      ],
+      "command": "docker build -f kickstart/Dockerfile . -t kickstart"
     },
     "serve": {
       "executor": "@nrwl/js:node",
