@@ -7,7 +7,7 @@ RUN adduser --system -G kickstart kickstart
 
 COPY package.json ./
 COPY pnpm-lock.yaml ./
-COPY dist/apps/kickstart .
+COPY dist/apps/api .
 RUN chown -R kickstart:kickstart .
 
 RUN npm install -g pnpm
