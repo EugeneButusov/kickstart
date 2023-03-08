@@ -1,0 +1,7 @@
+{
+  "name": "nest-users",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "typeorm": "*"
+  }
+}
