@@ -12,7 +12,8 @@ export class UsersService {
   ) {}
 
   public async create(user: User): Promise<User> {
-    return this.usersRepository.save(this.usersRepository.create(user));
+    const userEntity = this.usersRepository.create(user);
+    return this.usersRepository.save(userEntity);
   }
 
   public async findById(id: string): Promise<User | null> {
