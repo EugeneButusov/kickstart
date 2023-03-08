@@ -1,9 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ObjectIdColumn, PrimaryColumn } from 'typeorm';
 import { User } from '../interfaces/user.interface';
 
 @Entity('users')
 export class UserEntity implements User {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  _id: string;
+
+  @PrimaryColumn()
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   id: string;
