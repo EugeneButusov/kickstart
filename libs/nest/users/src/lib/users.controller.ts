@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from '../interfaces/user.interface';
 
 @Controller('users')
 @ApiTags('users')
@@ -16,13 +17,18 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post()
-  async create(@Body() payload: unknown): Promise<unknown> {
-    return { message: 'user created', data: payload };
+  async create(@Body() payload: User): Promise<User> {
+    return this.usersService.create(payload);
   }
 
   @Get('/:id')
-  async get(@Param('id') id: string): Promise<unknown> {
-    return { message: `user retrieved with ID ${id}` };
+  async get(@Param('id') id: string): Promise<User> {
+    const user = await this.usersService.findById(id);
+    if (!user) {
+      // TODO: throw an error
+      return { message: `user is not found with ${id}` };
+    }
+    return user;
   }
 
   @Patch('/:id')
