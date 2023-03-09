@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
 import { User } from '../interfaces/user.interface';
-import { ObjectIdColumn } from '@libs/nest/common/database/src/decorators/object-id-column.decorator';
+import { ObjectIdColumn } from '@libs/nest/common/database/decorators/object-id-column.decorator';
 
 @Entity('users')
 export class UserEntity implements User {
