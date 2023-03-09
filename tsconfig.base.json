@@ -18,8 +18,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@libs/nest/common/*": [
-        "libs/nest/common/*"
+      "@libs/nest/common/database/*": [
+        "libs/nest/common/database/src/*"
       ],
       "@libs/nest/users/*": [
         "libs/nest/users/src/*"
