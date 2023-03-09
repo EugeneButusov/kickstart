@@ -32,7 +32,7 @@
     "@nrwl/workspace": "15.8.5",
     "@types/jest": "^29.4.0",
     "@types/lodash": "^4.14.191",
-    "@types/mongodb": "^4.0.7",
+    "@types/mongodb": "~3.3.16",
     "@types/node": "~18.7.1",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
