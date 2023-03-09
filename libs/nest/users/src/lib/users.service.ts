@@ -16,6 +16,11 @@ export class UsersService {
   }
 
   public async findById(id: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOneById(id);
+  }
+
+  public async deleteById(id: string): Promise<boolean> {
+    const result = await this.usersRepository.delete(id);
+    return result.affected !== 0;
   }
 }

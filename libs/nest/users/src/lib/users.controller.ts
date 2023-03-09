@@ -38,6 +38,9 @@ export class UsersController {
 
   @Delete('/:id')
   async delete(@Param('id') id: string): Promise<unknown> {
-    return { message: `user deleted with ID ${id}` };
+    if (!(await this.usersService.deleteById(id))) {
+      throw new Error('user not found');
+    }
+    return {};
   }
 }
