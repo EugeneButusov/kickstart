@@ -18,6 +18,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@libs/nest/common/*": [
+        "libs/nest/common/*"
+      ],
       "@libs/nest/users/*": [
         "libs/nest/users/src/*"
       ]
