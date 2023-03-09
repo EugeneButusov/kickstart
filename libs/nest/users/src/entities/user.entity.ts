@@ -1,16 +1,9 @@
 import { Column, Entity } from 'typeorm';
 import { User } from '../interfaces/user.interface';
-import { ObjectIdColumn } from '@libs/nest/common/database/decorators/object-id-column.decorator';
+import { BaseEntity } from '@libs/nest/common/database/mongodb/base.entity';
 
 @Entity('users')
-export class UserEntity implements User {
-  @ObjectIdColumn({ name: '_id' })
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  id: string;
-
+export class UserEntity extends BaseEntity implements User {
   @Column({ unique: true })
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   username: string;
 }
