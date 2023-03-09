@@ -7,7 +7,10 @@ describe('UsersController', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [UsersService],
+      providers: [
+        { provide: `UserEntityRepository`, useValue: {} },
+        UsersService,
+      ],
       controllers: [UsersController],
     }).compile();
 
