@@ -11,7 +11,7 @@ export class UsersService {
     private readonly usersRepository: Repository<UserEntity>
   ) {}
 
-  public async create(user: User): Promise<User> {
+  public async create(user: Omit<User, 'id'>): Promise<User> {
     return this.usersRepository.save(this.usersRepository.create(user));
   }
 
@@ -21,7 +21,7 @@ export class UsersService {
 
   public async updateById(
     id: string,
-    update: Partial<Pick<User, 'id'>>
+    update: Partial<Omit<User, 'id'>>
   ): Promise<boolean> {
     const result = await this.usersRepository.update(id, update);
     return result.affected !== 0;

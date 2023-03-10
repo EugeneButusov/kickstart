@@ -13,6 +13,7 @@ import {
 import { UsersService } from './users.service';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '../interfaces/user.interface';
+import { UserModifyDto } from '../dto/create.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -20,7 +21,7 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post()
-  async create(@Body() payload: User): Promise<User> {
+  async create(@Body() payload: UserModifyDto): Promise<User> {
     return this.usersService.create(payload);
   }
 
@@ -37,7 +38,7 @@ export class UsersController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async patch(
     @Param('id') id: string,
-    @Body() payload: Partial<Pick<User, 'id'>>
+    @Body() payload: Partial<Omit<User, 'id'>>
   ): Promise<unknown> {
     if (!(await this.usersService.updateById(id, payload))) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
