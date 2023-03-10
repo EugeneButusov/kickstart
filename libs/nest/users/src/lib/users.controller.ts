@@ -38,11 +38,7 @@ export class UsersController {
   @Get()
   async list(): Promise<UserGetDto[]> {
     // TODO: support filters & pagination
-    const user = await this.usersService.find();
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-    return user;
+    return await this.usersService.find();
   }
 
   @Patch('/:id')
