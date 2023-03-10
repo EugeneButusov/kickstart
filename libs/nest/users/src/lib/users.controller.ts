@@ -11,7 +11,13 @@ import {
   Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UserUpdateDto } from '../dto/update.dto';
 import { UserCreateDto } from '../dto/create.dto';
 import { UserGetDto } from '../dto/get.dto';
@@ -22,12 +28,15 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post()
+  @ApiCreatedResponse({ type: UserGetDto })
   async create(@Body() payload: UserCreateDto): Promise<UserGetDto> {
     // TODO: handle duplication errors
     return this.usersService.create(payload);
   }
 
   @Get('/:id')
+  @ApiOkResponse({ type: UserGetDto })
+  @ApiNotFoundResponse()
   async get(@Param('id') id: string): Promise<UserGetDto> {
     const user = await this.usersService.findById(id);
     if (!user) {
@@ -44,6 +53,8 @@ export class UsersController {
 
   @Patch('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
+  @ApiNotFoundResponse()
   async patch(
     @Param('id') id: string,
     @Body() payload: UserUpdateDto
@@ -55,6 +66,8 @@ export class UsersController {
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
+  @ApiNotFoundResponse()
   async delete(@Param('id') id: string): Promise<void> {
     if (!(await this.usersService.deleteById(id))) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
