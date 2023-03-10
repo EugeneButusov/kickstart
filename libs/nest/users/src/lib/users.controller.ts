@@ -32,13 +32,21 @@ export class UsersController {
   }
 
   @Patch('/:id')
-  async patch(@Param('id') id: string): Promise<unknown> {
-    return { message: `user updated with ID ${id}` };
+  async patch(
+    @Param('id') id: string,
+    @Body() payload: Partial<Pick<User, 'id'>>
+  ): Promise<unknown> {
+    if (!(await this.usersService.updateById(id, payload))) {
+      // TODO: implement error handling
+      throw new Error('user not found');
+    }
+    return {};
   }
 
   @Delete('/:id')
   async delete(@Param('id') id: string): Promise<unknown> {
     if (!(await this.usersService.deleteById(id))) {
+      // TODO: implement error handling
       throw new Error('user not found');
     }
     return {};

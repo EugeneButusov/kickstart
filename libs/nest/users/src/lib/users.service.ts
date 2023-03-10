@@ -19,6 +19,14 @@ export class UsersService {
     return this.usersRepository.findOneById(id);
   }
 
+  public async updateById(
+    id: string,
+    update: Partial<Pick<User, 'id'>>
+  ): Promise<boolean> {
+    const result = await this.usersRepository.update(id, update);
+    return result.affected !== 0;
+  }
+
   public async deleteById(id: string): Promise<boolean> {
     const result = await this.usersRepository.delete(id);
     return result.affected !== 0;
