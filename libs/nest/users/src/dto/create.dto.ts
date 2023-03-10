@@ -1,3 +1,3 @@
-export class UserModifyDto {
+export class UserCreateDto {
   username: string;
 }

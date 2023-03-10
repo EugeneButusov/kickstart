@@ -12,8 +12,9 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags } from '@nestjs/swagger';
-import { User } from '../interfaces/user.interface';
-import { UserModifyDto } from '../dto/create.dto';
+import { UserUpdateDto } from '../dto/update.dto';
+import { UserCreateDto } from '../dto/create.dto';
+import { UserGetDto } from '../dto/get.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -21,12 +22,12 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post()
-  async create(@Body() payload: UserModifyDto): Promise<User> {
+  async create(@Body() payload: UserCreateDto): Promise<UserGetDto> {
     return this.usersService.create(payload);
   }
 
   @Get('/:id')
-  async get(@Param('id') id: string): Promise<User> {
+  async get(@Param('id') id: string): Promise<UserGetDto> {
     const user = await this.usersService.findById(id);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -38,20 +39,18 @@ export class UsersController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async patch(
     @Param('id') id: string,
-    @Body() payload: Partial<Omit<User, 'id'>>
-  ): Promise<unknown> {
+    @Body() payload: UserUpdateDto
+  ): Promise<void> {
     if (!(await this.usersService.updateById(id, payload))) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    return;
   }
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param('id') id: string): Promise<unknown> {
+  async delete(@Param('id') id: string): Promise<void> {
     if (!(await this.usersService.deleteById(id))) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    return;
   }
 }
