@@ -23,6 +23,7 @@ export class UsersController {
 
   @Post()
   async create(@Body() payload: UserCreateDto): Promise<UserGetDto> {
+    // TODO: handle duplication errors
     return this.usersService.create(payload);
   }
 
