@@ -3,6 +3,9 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -25,30 +28,29 @@ export class UsersController {
   async get(@Param('id') id: string): Promise<User> {
     const user = await this.usersService.findById(id);
     if (!user) {
-      // TODO: implement error handling
-      throw new Error('user not found');
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
     return user;
   }
 
   @Patch('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async patch(
     @Param('id') id: string,
     @Body() payload: Partial<Pick<User, 'id'>>
   ): Promise<unknown> {
     if (!(await this.usersService.updateById(id, payload))) {
-      // TODO: implement error handling
-      throw new Error('user not found');
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    return {};
+    return;
   }
 
   @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id') id: string): Promise<unknown> {
     if (!(await this.usersService.deleteById(id))) {
-      // TODO: implement error handling
-      throw new Error('user not found');
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    return {};
+    return;
   }
 }
