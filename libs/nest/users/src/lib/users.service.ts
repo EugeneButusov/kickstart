@@ -19,6 +19,11 @@ export class UsersService {
     return this.usersRepository.findOneById(id);
   }
 
+  // TODO: support filters & pagination
+  public async find(): Promise<User[]> {
+    return this.usersRepository.findBy({});
+  }
+
   public async updateById(
     id: string,
     update: Partial<Omit<User, 'id'>>
