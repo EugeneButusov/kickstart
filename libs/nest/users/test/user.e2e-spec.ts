@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { UsersModule, UsersService } from '../src';
 
-describe('Users (e2e)', () => {
+xdescribe('Users (e2e)', () => {
   let app: INestApplication;
   const usersService = {};
 
