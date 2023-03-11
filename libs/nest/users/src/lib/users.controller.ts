@@ -36,7 +36,7 @@ export class UsersController {
 
   @Get('/:id')
   @ApiOkResponse({ type: UserGetDto })
-  @ApiNotFoundResponse()
+  @ApiNotFoundResponse({ description: 'User with specified id not found' })
   async get(@Param('id') id: string): Promise<UserGetDto> {
     const user = await this.usersService.findById(id);
     if (!user) {
@@ -46,6 +46,8 @@ export class UsersController {
   }
 
   @Get()
+  @ApiOkResponse({ type: UserGetDto, isArray: true })
+  // TODO: restrict only for admins, split in different controller
   async list(): Promise<UserGetDto[]> {
     // TODO: support filters & pagination
     return await this.usersService.find();
@@ -54,7 +56,7 @@ export class UsersController {
   @Patch('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
-  @ApiNotFoundResponse()
+  @ApiNotFoundResponse({ description: 'User with specified id not found' })
   async patch(
     @Param('id') id: string,
     @Body() payload: UserUpdateDto
@@ -67,7 +69,7 @@ export class UsersController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
-  @ApiNotFoundResponse()
+  @ApiNotFoundResponse({ description: 'User with specified id not found' })
   async delete(@Param('id') id: string): Promise<void> {
     if (!(await this.usersService.deleteById(id))) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
