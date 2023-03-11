@@ -86,9 +86,20 @@ describe('UsersService', () => {
     const userId = 'test-id';
 
     describe('happy path', () => {
-      it('should resolve', () =>
+      it('should resolve to true', () =>
         expect(service.updateById(userId, userFixture('2'))).resolves.toBe(
           true
+        ));
+    });
+
+    describe('when nothing to update', () => {
+      beforeAll(() => {
+        usersRepositoryMock.update.mockResolvedValueOnce({ affected: 0 });
+      });
+
+      it('should resolve to false', () =>
+        expect(service.updateById(userId, userFixture('2'))).resolves.toBe(
+          false
         ));
     });
   });
@@ -99,6 +110,15 @@ describe('UsersService', () => {
     describe('happy path', () => {
       it('should resolve', () =>
         expect(service.deleteById(userId)).resolves.toBe(true));
+    });
+
+    describe('when nothing to delete', () => {
+      beforeAll(() => {
+        usersRepositoryMock.delete.mockResolvedValueOnce({ affected: 0 });
+      });
+
+      it('should resolve to false', () =>
+        expect(service.deleteById(userId)).resolves.toBe(false));
     });
   });
 });
