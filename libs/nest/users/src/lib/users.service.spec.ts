@@ -96,7 +96,7 @@ describe('UsersService', () => {
       });
 
       it('should resolve to an empty array', () =>
-        expect(service.find()).resolves.toBeInstanceOf(Array));
+        expect(service.find()).resolves.toMatchInlineSnapshot(`[]`));
     });
   });
 
