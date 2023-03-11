@@ -51,11 +51,51 @@ describe('UsersController', () => {
   });
 
   describe('#get', () => {
-    describe('happy path', () => {});
+    const userId = 'test-id';
+
+    describe('happy path', () => {
+      it('should resolve to entity', () =>
+        expect(controller.get(userId)).resolves.toMatchInlineSnapshot(`
+          {
+            "id": "test-id",
+            "username": "username-1",
+          }
+        `));
+    });
+
+    describe('when nothing found', () => {
+      beforeAll(() => {
+        usersServiceMock.findById.mockResolvedValueOnce(null);
+      });
+
+      it('should reject', () =>
+        expect(
+          controller.get(userId)
+        ).rejects.toThrowErrorMatchingInlineSnapshot(`"User not found"`));
+    });
   });
 
-  xdescribe('#list', () => {
-    describe('happy path', () => {});
+  describe('#list', () => {
+    describe('happy path', () => {
+      it('should resolve to array', () =>
+        expect(controller.list()).resolves.toMatchInlineSnapshot(`
+          [
+            {
+              "id": "id-1",
+              "username": "username-1",
+            },
+          ]
+        `));
+    });
+
+    describe('when nothing found', () => {
+      beforeAll(() => {
+        usersServiceMock.find.mockResolvedValueOnce([]);
+      });
+
+      it('should resolve to an empty array', () =>
+        expect(controller.list()).resolves.toMatchInlineSnapshot(`[]`));
+    });
   });
 
   describe('#update', () => {
