@@ -11,6 +11,8 @@ Kickstart is a monorepo boilerplate based on TS to start building something cool
 - [ ] Authentication/Authorization
 - [ ] DB integration
 - [ ] Pagination
+- [ ] Health checks
+- [ ] Monitoring
 - [ ] User management
 - [ ] Webhooks support
 

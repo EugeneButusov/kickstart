@@ -120,4 +120,4 @@ jobs:
         run: pnpm install --frozen-lockfile
       - run: npx tsc -v
       - name: Check app
-        run: tsc --project ./apps/kickstart/tsconfig.app.json --noEmit
+        run: tsc --project ./apps/api/tsconfig.app.json --noEmit
