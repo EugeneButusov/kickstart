@@ -74,7 +74,9 @@ describe('UsersController', () => {
       });
 
       it('should reject', () =>
-        expect(controller.update(userId, userFixture())).rejects.toThrow());
+        expect(
+          controller.update(userId, userFixture())
+        ).rejects.toThrowErrorMatchingInlineSnapshot(`"User not found"`));
     });
   });
 
@@ -92,7 +94,9 @@ describe('UsersController', () => {
       });
 
       it('should reject', () =>
-        expect(controller.delete(userId)).rejects.toThrow());
+        expect(
+          controller.delete(userId)
+        ).rejects.toThrowErrorMatchingInlineSnapshot(`"User not found"`));
     });
   });
 });
