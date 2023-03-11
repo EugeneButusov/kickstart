@@ -28,14 +28,17 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post()
-  @ApiCreatedResponse({ type: UserGetDto })
+  @ApiCreatedResponse({ type: UserGetDto, description: 'Returns created user' })
   async create(@Body() payload: UserCreateDto): Promise<UserGetDto> {
     // TODO: handle duplication errors
     return this.usersService.create(payload);
   }
 
   @Get('/:id')
-  @ApiOkResponse({ type: UserGetDto })
+  @ApiOkResponse({
+    type: UserGetDto,
+    description: 'Returns user matching the id',
+  })
   @ApiNotFoundResponse({ description: 'User with specified id not found' })
   async get(@Param('id') id: string): Promise<UserGetDto> {
     const user = await this.usersService.findById(id);
@@ -46,7 +49,11 @@ export class UsersController {
   }
 
   @Get()
-  @ApiOkResponse({ type: UserGetDto, isArray: true })
+  @ApiOkResponse({
+    type: UserGetDto,
+    isArray: true,
+    description: 'Returns list of users',
+  })
   // TODO: restrict only for admins, split in different controller
   async list(): Promise<UserGetDto[]> {
     // TODO: support filters & pagination
@@ -55,7 +62,9 @@ export class UsersController {
 
   @Patch('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiNoContentResponse()
+  @ApiNoContentResponse({
+    description: 'Returns in case if user successfully updated',
+  })
   @ApiNotFoundResponse({ description: 'User with specified id not found' })
   async patch(
     @Param('id') id: string,
@@ -68,7 +77,9 @@ export class UsersController {
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiNoContentResponse()
+  @ApiNoContentResponse({
+    description: 'Returns in case if user successfully removed',
+  })
   @ApiNotFoundResponse({ description: 'User with specified id not found' })
   async delete(@Param('id') id: string): Promise<void> {
     if (!(await this.usersService.deleteById(id))) {
