@@ -25,7 +25,7 @@ import { UserGetDto } from '../dto/get.dto';
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
   @ApiCreatedResponse({ type: UserGetDto, description: 'Returns created user' })
@@ -66,7 +66,7 @@ export class UsersController {
     description: 'Returns in case if user successfully updated',
   })
   @ApiNotFoundResponse({ description: 'User with specified id not found' })
-  async patch(
+  async update(
     @Param('id') id: string,
     @Body() payload: UserUpdateDto
   ): Promise<void> {
