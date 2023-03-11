@@ -58,7 +58,7 @@ describe('UsersService', () => {
     const userId = 'test-id';
 
     describe('happy path', () => {
-      it('should resolve', () =>
+      it('should resolve to entity', () =>
         expect(service.findById(userId)).resolves.toMatchInlineSnapshot(`
           {
             "id": "test-id",
@@ -66,11 +66,20 @@ describe('UsersService', () => {
           }
         `));
     });
+
+    describe('when nothing found', () => {
+      beforeAll(() => {
+        usersRepositoryMock.findOneById.mockResolvedValueOnce(null);
+      });
+
+      it('should resolve to null', () =>
+        expect(service.findById(userId)).resolves.toBe(null));
+    });
   });
 
   describe('#find', () => {
     describe('happy path', () => {
-      it('should resolve', () =>
+      it('should resolve to array', () =>
         expect(service.find()).resolves.toMatchInlineSnapshot(`
           [
             {
@@ -79,6 +88,15 @@ describe('UsersService', () => {
             },
           ]
         `));
+    });
+
+    describe('when nothing found', () => {
+      beforeAll(() => {
+        usersRepositoryMock.findBy.mockResolvedValueOnce([]);
+      });
+
+      it('should resolve to an empty array', () =>
+        expect(service.find()).resolves.toBeInstanceOf(Array));
     });
   });
 
