@@ -25,7 +25,7 @@ import { UserGetDto } from '../dto/get.dto';
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
   @ApiCreatedResponse({ type: UserGetDto, description: 'Returns created user' })
