@@ -15,8 +15,8 @@ const usersServiceMock = {
     .mockImplementation((payload) => ({ ...payload, ...userFixture() })),
   findById: jest.fn().mockImplementation((id) => ({ ...userFixture(), id })),
   find: jest.fn().mockImplementation(() => [{ ...userFixture() }]),
-  updateById: jest.fn().mockImplementation(() => ({ affected: 1 })),
-  deleteById: jest.fn().mockImplementation(() => ({ affected: 1 })),
+  updateById: jest.fn().mockImplementation(() => true),
+  deleteById: jest.fn().mockImplementation(() => true),
 };
 
 describe('UsersController', () => {
@@ -50,11 +50,49 @@ describe('UsersController', () => {
     });
   });
 
-  xdescribe('#get', () => {});
+  describe('#get', () => {
+    describe('happy path', () => {});
+  });
 
-  xdescribe('#list', () => {});
+  xdescribe('#list', () => {
+    describe('happy path', () => {});
+  });
 
-  xdescribe('#update', () => {});
+  describe('#update', () => {
+    const userId = 'test-id';
 
-  xdescribe('#delete', () => {});
+    describe('happy path', () => {
+      it('should resolve', () =>
+        expect(controller.update(userId, userFixture())).resolves.toBe(
+          undefined
+        ));
+    });
+
+    describe('when nothing found', () => {
+      beforeAll(() => {
+        usersServiceMock.updateById.mockResolvedValueOnce(false);
+      });
+
+      it('should reject', () =>
+        expect(controller.update(userId, userFixture())).rejects.toThrow());
+    });
+  });
+
+  describe('#delete', () => {
+    const userId = 'test-id';
+
+    describe('happy path', () => {
+      it('should resolve', () =>
+        expect(controller.delete(userId)).resolves.toBe(undefined));
+    });
+
+    describe('when nothing found', () => {
+      beforeAll(() => {
+        usersServiceMock.deleteById.mockResolvedValueOnce(false);
+      });
+
+      it('should reject', () =>
+        expect(controller.delete(userId)).rejects.toThrow());
+    });
+  });
 });
