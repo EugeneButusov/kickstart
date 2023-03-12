@@ -1,19 +1,24 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from '../strategies/local.strategy';
 import { JwtStrategy } from '../strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthModuleOptions } from '../interfaces/auth-options.interface';
 
-@Module({
-  imports: [
-    JwtModule.register({
-      secret: 'jwt-secret', // TODO: extract in configuration
-      signOptions: { expiresIn: '60s' }, // TODO: extract in configuration
-    }),
-  ],
-  controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
-  exports: [],
-})
-export class AuthModule {}
+@Module({})
+export class AuthModule {
+  static forRoot(options: AuthModuleOptions): DynamicModule {
+    return {
+      module: AuthModule,
+      imports: [
+        JwtModule.register({
+          ...options.jwt,
+        }),
+      ],
+      controllers: [AuthController],
+      providers: [AuthService, LocalStrategy, JwtStrategy],
+      exports: [],
+    };
+  }
+}

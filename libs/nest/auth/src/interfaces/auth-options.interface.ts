@@ -1,9 +1,8 @@
 import { ModuleMetadata, Provider, Type } from '@nestjs/common';
+import { JwtModuleOptions } from '@nestjs/jwt/dist/interfaces/jwt-module-options.interface';
 
 export type AuthModuleOptions = {
-  jwt: {
-    secret: string;
-  };
+  jwt: JwtModuleOptions;
 };
 
 export interface AuthOptionsFactory {

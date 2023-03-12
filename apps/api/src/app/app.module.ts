@@ -16,7 +16,11 @@ import { AuthModule } from '@libs/nest/auth/lib/auth.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    AuthModule,
+    AuthModule.forRoot({
+      jwt: {
+        secret: 'my-secret',
+      },
+    }),
     UsersModule,
   ],
   controllers: [AppController],
