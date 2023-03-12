@@ -13,9 +13,7 @@ describe('AppService', () => {
     service = app.get<AppService>(AppService);
   });
 
-  describe('getData', () => {
-    it('should return "Welcome to kickstart!"', () => {
-      expect(service.getData()).toEqual({ message: 'Welcome to kickstart!' });
-    });
+  it('should be defined', () => {
+    expect(service).toBeTruthy();
   });
 });

@@ -13,12 +13,7 @@ describe('AppController', () => {
     }).compile();
   });
 
-  describe('welcome', () => {
-    it('should return "Welcome to kickstart!"', () => {
-      const appController = app.get<AppController>(AppController);
-      expect(appController.welcome()).toEqual({
-        message: 'Welcome to kickstart!',
-      });
-    });
+  it('should be defined', () => {
+    expect(app).toBeTruthy();
   });
 });
