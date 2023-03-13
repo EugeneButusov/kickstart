@@ -22,6 +22,9 @@
       "@libs/nest/common/database/*": [
         "libs/nest/common/database/src/*"
       ],
+      "@libs/nest/auth/*": [
+        "libs/nest/auth/src/*"
+      ],
       "@libs/nest/users/*": [
         "libs/nest/users/src/*"
       ]
