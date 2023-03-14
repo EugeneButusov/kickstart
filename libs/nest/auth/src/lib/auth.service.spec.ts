@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from '@libs/nest/users/lib/users.service';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 // TODO: implement factory for fixtures
 const userFixture = (seed = '1') => ({
@@ -17,6 +17,7 @@ const usersServiceMock = {
 
 describe('AuthService', () => {
   let service: AuthService;
+  let jwtService: JwtService;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -35,6 +36,7 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get(AuthService);
+    jwtService = module.get(JwtService);
   });
 
   it('should be defined', () => {
@@ -72,12 +74,19 @@ describe('AuthService', () => {
 
   describe('#login', () => {
     describe('happy path', () => {
-      it('should resolve correctly', () =>
-        expect(service.login(userFixture())).resolves.toMatchInlineSnapshot(`
+      it('should resolve correctly', async () => {
+        const { accessToken } = await service.login(userFixture());
+        expect(await jwtService.verifyAsync(accessToken)).toMatchInlineSnapshot(
+          { iat: expect.any(Number) },
+          `
           {
-            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJpZC0xIiwidXNlcm5hbWUiOiJ1c2VybmFtZS0xIiwiaWF0IjoxNjc4Nzk5ODczfQ._UYVAZLAUTu3IBeUa3pgQlJDmIghW9b72NaSu0Seh9E",
+            "iat": Any<Number>,
+            "sub": "id-1",
+            "username": "username-1",
           }
-        `));
+        `
+        );
+      });
     });
   });
 });
