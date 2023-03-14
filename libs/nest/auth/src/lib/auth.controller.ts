@@ -2,7 +2,6 @@ import {
   Controller,
   HttpCode,
   HttpStatus,
-  Logger,
   Post,
   Req,
   UseGuards,
@@ -21,8 +20,6 @@ import { Authentication } from '@libs/nest/auth/interfaces/login-result.interfac
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  private readonly logger = new Logger(AuthController.name);
-
   constructor(private readonly authService: AuthService) {}
 
   @Post('token')
@@ -34,6 +31,6 @@ export class AuthController {
   })
   @ApiUnauthorizedResponse()
   async token(@Req() request): Promise<Authentication> {
-    return this.authService.login(request.user);
+    return this.authService.authenticate(request.user);
   }
 }
