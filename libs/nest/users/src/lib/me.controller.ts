@@ -43,8 +43,6 @@ export class MeController {
   }
 
   @Patch('')
-  @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse({
     description: 'Returns in case if user successfully updated',
