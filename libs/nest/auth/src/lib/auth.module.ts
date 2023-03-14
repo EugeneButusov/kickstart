@@ -19,7 +19,14 @@ export class AuthModule {
         }),
       ],
       controllers: [AuthController],
-      providers: [AuthService, LocalStrategy, JwtStrategy],
+      providers: [
+        AuthService,
+        LocalStrategy,
+        {
+          provide: JwtStrategy,
+          useFactory: () => new JwtStrategy(options.jwt),
+        },
+      ],
       exports: [],
     };
   }
