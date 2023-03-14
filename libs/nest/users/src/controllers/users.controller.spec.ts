@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { UsersService } from '../lib/users.service';
 import * as _ from 'lodash';
 
 // TODO: implement factory for fixtures

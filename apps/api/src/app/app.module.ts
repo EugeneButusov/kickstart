@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from '@libs/nest/users/lib/users.module';
+import { AuthModule } from '@libs/nest/auth/lib/auth.module';
 
 @Module({
   imports: [
@@ -15,7 +16,12 @@ import { UsersModule } from '@libs/nest/users/lib/users.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-
+    AuthModule.forRoot({
+      jwt: {
+        secret: 'my-secret',
+        signOptions: { expiresIn: '60m' },
+      },
+    }),
     UsersModule,
   ],
   controllers: [AppController],
