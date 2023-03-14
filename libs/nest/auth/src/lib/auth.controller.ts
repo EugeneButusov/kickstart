@@ -16,6 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { IssueTokenDto } from '../dto/issue-token.dto';
+import { Authentication } from '@libs/nest/auth/interfaces/login-result.interface';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -32,7 +33,7 @@ export class AuthController {
     description: 'returns access token to use in authorized requests',
   })
   @ApiUnauthorizedResponse()
-  async token(@Req() request) {
+  async token(@Req() request): Promise<Authentication> {
     return this.authService.login(request.user);
   }
 }
