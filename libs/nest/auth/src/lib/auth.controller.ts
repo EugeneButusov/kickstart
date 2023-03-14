@@ -16,7 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { IssueTokenDto } from '../dto/issue-token.dto';
-import { Authentication } from '@libs/nest/auth/interfaces/login-result.interface';
+import { Authentication } from '../interfaces/login-result.interface';
 
 @Controller('auth')
 @ApiTags('auth')
