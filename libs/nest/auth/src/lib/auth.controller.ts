@@ -8,7 +8,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { IssueTokenDto } from '../dto/issue-token.dto';
 
@@ -26,6 +31,7 @@ export class AuthController {
   @ApiOkResponse({
     description: 'returns access token to use in authorized requests',
   })
+  @ApiUnauthorizedResponse()
   async token(@Req() request) {
     return this.authService.login(request.user);
   }
