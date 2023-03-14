@@ -17,6 +17,7 @@ async function bootstrap() {
   // set up OpenAPI
   const config = new DocumentBuilder()
     .setTitle('Kickstart API')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(globalPrefix, app, document);
