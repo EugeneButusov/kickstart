@@ -10,19 +10,9 @@ const userFixture = (seed = '1') => ({
 });
 
 const usersServiceMock = {
-  create: jest.fn().mockImplementation(() => ({ ...userFixture() })),
-  save: jest
+  findByUsername: jest
     .fn()
-    .mockImplementation((entity) => ({ ...entity, id: 'test-id' })),
-  findOneById: jest.fn().mockImplementation((id) => ({ ...userFixture(), id })),
-  findOneBy: jest
-    .fn()
-    .mockImplementation(({ username }) => ({ id: 'test-id', username })),
-  findBy: jest
-    .fn()
-    .mockImplementation(() => [{ ...userFixture(), id: 'test-id' }]),
-  update: jest.fn().mockImplementation(() => ({ affected: 1 })),
-  delete: jest.fn().mockImplementation(() => ({ affected: 1 })),
+    .mockImplementation(({ username }) => ({ ...userFixture(), username })),
 };
 
 describe('AuthService', () => {
@@ -30,7 +20,11 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      imports: [JwtModule],
+      imports: [
+        JwtModule.register({
+          secret: 'test-secret',
+        }),
+      ],
       providers: [
         {
           provide: UsersService,
@@ -45,5 +39,45 @@ describe('AuthService', () => {
 
   it('should be defined', () => {
     expect(service).toBeTruthy();
+  });
+
+  describe('#validate', () => {
+    const credentials = {
+      username: 'test-username',
+      password: 'test-password',
+    };
+
+    describe('happy path', () => {
+      it('should resolve correctly', () =>
+        expect(service.validate(credentials.username, credentials.password))
+          .resolves.toMatchInlineSnapshot(`
+          {
+            "id": "id-1",
+            "username": undefined,
+          }
+        `));
+    });
+
+    describe('when user is not found', () => {
+      beforeAll(() => {
+        usersServiceMock.findByUsername.mockResolvedValueOnce(null);
+      });
+
+      it('should resolve correctly', () =>
+        expect(
+          service.validate(credentials.username, credentials.password)
+        ).resolves.toBe(null));
+    });
+  });
+
+  describe('#login', () => {
+    describe('happy path', () => {
+      it('should resolve correctly', () =>
+        expect(service.login(userFixture())).resolves.toMatchInlineSnapshot(`
+          {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJpZC0xIiwidXNlcm5hbWUiOiJ1c2VybmFtZS0xIiwiaWF0IjoxNjc4Nzk5ODczfQ._UYVAZLAUTu3IBeUa3pgQlJDmIghW9b72NaSu0Seh9E",
+          }
+        `));
+    });
   });
 });
