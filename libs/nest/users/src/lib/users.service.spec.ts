@@ -12,6 +12,9 @@ const usersRepositoryMock = {
     .fn()
     .mockImplementation((entity) => ({ ...entity, id: 'test-id' })),
   findOneById: jest.fn().mockImplementation((id) => ({ ...userFixture(), id })),
+  findOneBy: jest
+    .fn()
+    .mockImplementation(({ username }) => ({ id: 'test-id', username })),
   findBy: jest
     .fn()
     .mockImplementation(() => [{ ...userFixture(), id: 'test-id' }]),
@@ -74,6 +77,30 @@ describe('UsersService', () => {
 
       it('should resolve to null', () =>
         expect(service.findById(userId)).resolves.toBe(null));
+    });
+  });
+
+  describe('#findByUsername', () => {
+    const username = 'test-username';
+
+    describe('happy path', () => {
+      it('should resolve to entity', () =>
+        expect(service.findByUsername(username)).resolves
+          .toMatchInlineSnapshot(`
+          {
+            "id": "test-id",
+            "username": "test-username",
+          }
+        `));
+    });
+
+    describe('when nothing found', () => {
+      beforeAll(() => {
+        usersRepositoryMock.findOneBy.mockResolvedValueOnce(null);
+      });
+
+      it('should resolve to null', () =>
+        expect(service.findByUsername(username)).resolves.toBe(null));
     });
   });
 
