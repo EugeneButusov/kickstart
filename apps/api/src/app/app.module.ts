@@ -19,6 +19,7 @@ import { AuthModule } from '@libs/nest/auth/lib/auth.module';
     AuthModule.forRoot({
       jwt: {
         secret: 'my-secret',
+        signOptions: { expiresIn: '60m' },
       },
     }),
     UsersModule,
