@@ -28,7 +28,7 @@ import { Me } from '../decorators/me.decorator';
 export class MeController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('')
+  @Get()
   @ApiOkResponse({
     type: UserGetDto,
     description: 'Returns user matching the credentials',
@@ -42,7 +42,7 @@ export class MeController {
     return user;
   }
 
-  @Patch('')
+  @Patch()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse({
     description: 'Returns in case if user successfully updated',
