@@ -44,7 +44,10 @@ describe('UsersService', () => {
   });
 
   describe('#create', () => {
-    const user = userFixture();
+    const user = {
+      ...userFixture(),
+      password: 'test-password',
+    };
 
     describe('happy path', () => {
       it('should resolve', () =>

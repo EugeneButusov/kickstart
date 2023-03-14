@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { CreateUserParams } from '../interfaces/create-user-params.interface';
 
 @Injectable()
 export class UsersService {
@@ -12,8 +13,17 @@ export class UsersService {
     private readonly usersRepository: Repository<UserEntity>
   ) {}
 
-  public async create(user: Omit<User, 'id'>): Promise<User> {
-    return this.usersRepository.save(this.usersRepository.create(user));
+  public async create(params: CreateUserParams): Promise<User> {
+    const createUserParams: Omit<User, 'id'> = {
+      username: params.username,
+      hashedPassword: await bcrypt.hash(
+        params.password,
+        await bcrypt.genSalt()
+      ),
+    };
+    return this.usersRepository.save(
+      this.usersRepository.create(createUserParams)
+    );
   }
 
   public async findById(id: string): Promise<User | null> {
