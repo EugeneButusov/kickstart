@@ -72,10 +72,10 @@ describe('AuthService', () => {
     });
   });
 
-  describe('#login', () => {
+  describe('#authenticate', () => {
     describe('happy path', () => {
       it('should resolve correctly', async () => {
-        const { accessToken } = await service.login(userFixture());
+        const { accessToken } = await service.authenticate(userFixture());
         expect(await jwtService.verifyAsync(accessToken)).toMatchInlineSnapshot(
           { iat: expect.any(Number) },
           `
