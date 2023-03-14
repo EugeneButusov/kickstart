@@ -82,10 +82,11 @@ describe('UsersService', () => {
 
   describe('#findByUsername', () => {
     const username = 'test-username';
+    const password = 'test-password';
 
     describe('happy path', () => {
       it('should resolve to entity', () =>
-        expect(service.findByUsername(username)).resolves
+        expect(service.findByUsernameAndPassword(username, password)).resolves
           .toMatchInlineSnapshot(`
           {
             "id": "test-id",
@@ -100,7 +101,9 @@ describe('UsersService', () => {
       });
 
       it('should resolve to null', () =>
-        expect(service.findByUsername(username)).resolves.toBe(null));
+        expect(
+          service.findByUsernameAndPassword(username, password)
+        ).resolves.toBe(null));
     });
   });
 

@@ -3,6 +3,7 @@ import { User } from '../interfaces/user.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -19,8 +20,20 @@ export class UsersService {
     return this.usersRepository.findOneById(id);
   }
 
-  public async findByUsername(username: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ username });
+  public async findByUsernameAndPassword(
+    username: string,
+    password: string
+  ): Promise<User | null> {
+    const user = await this.usersRepository.findOneBy({ username });
+    if (user) {
+      try {
+        await bcrypt.compare(password, user.hashedPassword);
+        return user;
+      } catch {
+        return null;
+      }
+    }
+    return null;
   }
 
   // TODO: support filters & pagination

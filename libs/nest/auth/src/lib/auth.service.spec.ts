@@ -10,7 +10,7 @@ const userFixture = (seed = '1') => ({
 });
 
 const usersServiceMock = {
-  findByUsername: jest
+  findByUsernameAndPassword: jest
     .fn()
     .mockImplementation(({ username }) => ({ ...userFixture(), username })),
 };
@@ -62,7 +62,7 @@ describe('AuthService', () => {
 
     describe('when user is not found', () => {
       beforeAll(() => {
-        usersServiceMock.findByUsername.mockResolvedValueOnce(null);
+        usersServiceMock.findByUsernameAndPassword.mockResolvedValueOnce(null);
       });
 
       it('should resolve correctly', () =>
