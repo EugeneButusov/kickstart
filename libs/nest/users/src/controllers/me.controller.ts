@@ -8,7 +8,7 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UsersService } from '../lib/users.service';
 import {
   ApiBearerAuth,
   ApiNoContentResponse,
