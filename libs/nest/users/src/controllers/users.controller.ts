@@ -21,6 +21,8 @@ import {
 import { UserUpdateDto } from '../dto/update.dto';
 import { UserCreateDto } from '../dto/create.dto';
 import { UserGetDto } from '../dto/get.dto';
+import { User } from '../interfaces/user.interface';
+import * as bcrypt from 'bcrypt';
 
 @Controller('users')
 @ApiTags('users')
@@ -30,8 +32,17 @@ export class UsersController {
   @Post()
   @ApiCreatedResponse({ type: UserGetDto, description: 'Returns created user' })
   async create(@Body() payload: UserCreateDto): Promise<UserGetDto> {
+    const createUserParams: Omit<User, 'id'> = {
+      username: payload.username,
+      hashedPassword: await bcrypt.hash(
+        payload.password,
+        await bcrypt.genSalt()
+      ),
+    };
+
     // TODO: handle duplication errors
-    return this.usersService.create(payload);
+    const user = await this.usersService.create(createUserParams);
+    return UserGetDto.fromUserEntity(user);
   }
 
   @Get('/:id')
