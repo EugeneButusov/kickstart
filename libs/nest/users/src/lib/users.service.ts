@@ -37,8 +37,9 @@ export class UsersService {
     const user = await this.usersRepository.findOneBy({ username });
     if (user) {
       try {
-        await bcrypt.compare(password, user.hashedPassword);
-        return user;
+        if (await bcrypt.compare(password, user.hashedPassword)) {
+          return user;
+        }
       } catch {
         return null;
       }
