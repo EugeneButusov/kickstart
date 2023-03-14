@@ -8,8 +8,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { IssueTokenDto } from '../dto/issue-token.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -18,9 +19,13 @@ export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(AuthGuard('local'))
   @Post('token')
+  @UseGuards(AuthGuard('local'))
   @HttpCode(HttpStatus.OK)
+  @ApiBody({ type: IssueTokenDto })
+  @ApiOkResponse({
+    description: 'returns access token to use in authorized requests',
+  })
   async token(@Req() request) {
     return this.authService.login(request.user);
   }

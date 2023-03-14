@@ -9,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
@@ -21,6 +22,7 @@ import {
 import { UserUpdateDto } from '../dto/update.dto';
 import { UserCreateDto } from '../dto/create.dto';
 import { UserGetDto } from '../dto/get.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 @ApiTags('users')
@@ -35,6 +37,7 @@ export class UsersController {
   }
 
   @Get('/:id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOkResponse({
     type: UserGetDto,
     description: 'Returns user matching the id',
