@@ -6,6 +6,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBody,
@@ -30,7 +31,7 @@ export class AuthController {
     description: 'returns access token to use in authorized requests',
   })
   @ApiUnauthorizedResponse()
-  async token(@Req() request): Promise<Authentication> {
+  async token(@Req() request: Request): Promise<Authentication> {
     return this.authService.authenticate(request.user);
   }
 }
