@@ -34,19 +34,19 @@ export class UsersController {
     return this.usersService.create(payload);
   }
 
-  // @Get('/:id')
-  // @ApiOkResponse({
-  //   type: UserGetDto,
-  //   description: 'Returns user matching the id',
-  // })
-  // @ApiNotFoundResponse({ description: 'User with specified id not found' })
-  // async get(@Param('id') id: string): Promise<UserGetDto> {
-  //   const user = await this.usersService.findById(id);
-  //   if (!user) {
-  //     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-  //   }
-  //   return user;
-  // }
+  @Get('/:id')
+  @ApiOkResponse({
+    type: UserGetDto,
+    description: 'Returns user matching the id',
+  })
+  @ApiNotFoundResponse({ description: 'User with specified id not found' })
+  async get(@Param('id') id: string): Promise<UserGetDto> {
+    const user = await this.usersService.findById(id);
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return user;
+  }
 
   @Get()
   @ApiOkResponse({
