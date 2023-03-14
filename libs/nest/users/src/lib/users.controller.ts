@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
@@ -38,6 +39,7 @@ export class UsersController {
 
   @Get('/:id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   @ApiOkResponse({
     type: UserGetDto,
     description: 'Returns user matching the id',
