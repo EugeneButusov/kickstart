@@ -19,6 +19,10 @@ export class UsersService {
     return this.usersRepository.findOneById(id);
   }
 
+  public findByUsername(username: string): Promise<User | null> {
+    return this.usersRepository.findOneBy({ username });
+  }
+
   // TODO: support filters & pagination
   public async find(): Promise<User[]> {
     return this.usersRepository.findBy({});

@@ -5,6 +5,7 @@ import { JwtStrategy } from '../strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModuleOptions } from '../interfaces/auth-options.interface';
+import { UsersModule } from '@libs/nest/users/lib/users.module';
 
 @Module({})
 export class AuthModule {
@@ -12,6 +13,7 @@ export class AuthModule {
     return {
       module: AuthModule,
       imports: [
+        UsersModule, // TODO: dependency must be less tough
         JwtModule.register({
           ...options.jwt,
         }),
