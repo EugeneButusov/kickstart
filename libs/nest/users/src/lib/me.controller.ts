@@ -49,7 +49,7 @@ export class MeController {
   @ApiNoContentResponse({
     description: 'Returns in case if user successfully updated',
   })
-  @ApiNotFoundResponse({ description: 'User with specified id not found' })
+  @ApiNotFoundResponse({ description: 'User not found' })
   async update(
     @Me('id') id: string,
     @Body() payload: UserUpdateDto
