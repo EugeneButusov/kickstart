@@ -9,11 +9,9 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
-  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
@@ -23,7 +21,6 @@ import {
 import { UserUpdateDto } from '../dto/update.dto';
 import { UserCreateDto } from '../dto/create.dto';
 import { UserGetDto } from '../dto/get.dto';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 @ApiTags('users')
@@ -37,21 +34,19 @@ export class UsersController {
     return this.usersService.create(payload);
   }
 
-  @Get('/:id')
-  @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth()
-  @ApiOkResponse({
-    type: UserGetDto,
-    description: 'Returns user matching the id',
-  })
-  @ApiNotFoundResponse({ description: 'User with specified id not found' })
-  async get(@Param('id') id: string): Promise<UserGetDto> {
-    const user = await this.usersService.findById(id);
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-    return user;
-  }
+  // @Get('/:id')
+  // @ApiOkResponse({
+  //   type: UserGetDto,
+  //   description: 'Returns user matching the id',
+  // })
+  // @ApiNotFoundResponse({ description: 'User with specified id not found' })
+  // async get(@Param('id') id: string): Promise<UserGetDto> {
+  //   const user = await this.usersService.findById(id);
+  //   if (!user) {
+  //     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  //   }
+  //   return user;
+  // }
 
   @Get()
   @ApiOkResponse({
