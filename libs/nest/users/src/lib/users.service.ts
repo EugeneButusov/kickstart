@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { CreateUserParams } from '../interfaces/create-user-params.interface';
+import { UserRole } from '@libs/nest/users/types/user-role.enum';
 
 @Injectable()
 export class UsersService {
@@ -16,6 +17,7 @@ export class UsersService {
   public async create(params: CreateUserParams): Promise<User> {
     const createUserParams: Omit<User, 'id'> = {
       username: params.username,
+      role: UserRole.Regular,
       hashedPassword: await bcrypt.hash(
         params.password,
         await bcrypt.genSalt()
