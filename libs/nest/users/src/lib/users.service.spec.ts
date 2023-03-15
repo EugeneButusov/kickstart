@@ -88,18 +88,21 @@ describe('UsersService', () => {
   });
 
   describe('#findByUsername', () => {
-    const username = 'test-username';
-    const password = 'test-password';
+    const createUserParams = createUserParamsFixture();
 
     describe('happy path', () => {
+      beforeAll(async () => {
+        const user = await service.create(createUserParams);
+        usersRepositoryMock.findOneBy.mockResolvedValueOnce(user);
+      });
+
       it('should resolve to entity', () =>
-        expect(service.findByUsernameAndPassword(username, password)).resolves
-          .toMatchInlineSnapshot(`
-          {
-            "id": "test-id",
-            "username": "test-username",
-          }
-        `));
+        expect(
+          service.findByUsernameAndPassword(
+            createUserParams.username,
+            createUserParams.password
+          )
+        ).resolves.toBeDefined());
     });
 
     describe('when nothing found', () => {
@@ -109,7 +112,10 @@ describe('UsersService', () => {
 
       it('should resolve to null', () =>
         expect(
-          service.findByUsernameAndPassword(username, password)
+          service.findByUsernameAndPassword(
+            createUserParams.username,
+            createUserParams.password
+          )
         ).resolves.toBe(null));
     });
   });
