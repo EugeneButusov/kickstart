@@ -15,6 +15,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UserUpdateDto } from '../dto/update.dto';
 import { UserGetDto } from '../dto/get.dto';
@@ -25,6 +26,7 @@ import { Me } from '../decorators/me.decorator';
 @ApiTags('users')
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
+@ApiUnauthorizedResponse({ description: 'Authentication missed or invalid ' })
 export class MeUsersController {
   constructor(private readonly usersService: UsersService) {}
 
