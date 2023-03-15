@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { CreateUserParams } from '../interfaces/create-user-params.interface';
-import { UserRole } from '@libs/nest/users/types/user-role.enum';
+import { UserRole } from '../types/user-role.enum';
 
 @Injectable()
 export class UsersService {
