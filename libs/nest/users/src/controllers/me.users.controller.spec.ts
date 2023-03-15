@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { UsersService } from '../lib/users.service';
-import { MeController } from './me.controller';
+import { MeUsersController } from './me.users.controller';
 
 // TODO: implement factory for fixtures
 const userFixture = (seed = '1') => ({
@@ -14,15 +14,15 @@ const usersServiceMock = {
 };
 
 describe('MeController', () => {
-  let controller: MeController;
+  let controller: MeUsersController;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [{ provide: UsersService, useValue: usersServiceMock }],
-      controllers: [MeController],
+      controllers: [MeUsersController],
     }).compile();
 
-    controller = module.get(MeController);
+    controller = module.get(MeUsersController);
   });
 
   it('should be defined', () => {

@@ -8,32 +8,36 @@ import {
   HttpStatus,
   Param,
   Patch,
-  Post,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '../lib/users.service';
 import {
-  ApiCreatedResponse,
+  ApiBearerAuth,
+  ApiForbiddenResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UserUpdateDto } from '../dto/update.dto';
-import { UserCreateDto } from '../dto/create.dto';
 import { UserGetDto } from '../dto/get.dto';
+import { Roles } from '../decorators/role.decorator';
+import { RoleGuard } from '../guards/role.guard';
+import { Role } from '../types/role.enum';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('users')
+@Controller('admin/users')
 @ApiTags('users')
-export class UsersController {
+@UseGuards(AuthGuard('jwt'), RoleGuard)
+@Roles([Role.Admin])
+@ApiBearerAuth()
+@ApiUnauthorizedResponse({ description: 'Authentication missed or invalid ' })
+@ApiForbiddenResponse({
+  description: 'This endpoint has been called by non-admin user',
+})
+export class AdminUsersController {
   constructor(private readonly usersService: UsersService) {}
-
-  @Post()
-  @ApiCreatedResponse({ type: UserGetDto, description: 'Returns created user' })
-  async create(@Body() payload: UserCreateDto): Promise<UserGetDto> {
-    // TODO: handle duplication errors
-    const user = await this.usersService.create(payload);
-    return UserGetDto.fromUserEntity(user);
-  }
 
   @Get('/:id')
   @ApiOkResponse({

@@ -25,7 +25,7 @@ import { Me } from '../decorators/me.decorator';
 @ApiTags('users')
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
-export class MeController {
+export class MeUsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()

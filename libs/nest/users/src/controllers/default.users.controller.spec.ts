@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { UsersController } from './users.controller';
+import { DefaultUsersController } from './default.users.controller';
 import { UsersService } from '../lib/users.service';
 import { createUserParamsFixture } from '../../test/fixtures/create-user-params.fixture';
 
@@ -20,15 +20,15 @@ const usersServiceMock = {
 };
 
 describe('UsersController', () => {
-  let controller: UsersController;
+  let controller: DefaultUsersController;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [{ provide: UsersService, useValue: usersServiceMock }],
-      controllers: [UsersController],
+      controllers: [DefaultUsersController],
     }).compile();
 
-    controller = module.get(UsersController);
+    controller = module.get(DefaultUsersController);
   });
 
   it('should be defined', () => {
