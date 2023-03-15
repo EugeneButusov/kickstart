@@ -10,9 +10,9 @@ import { AdminUsersController } from '../controllers/admin.users.controller';
   imports: [TypeOrmModule.forFeature([UserEntity])],
   // controllers ordering matters
   controllers: [
+    DefaultUsersController,
     MeUsersController,
     AdminUsersController,
-    DefaultUsersController,
   ],
   providers: [UsersService],
   exports: [UsersService],
