@@ -15,16 +15,15 @@ export class UsersService {
   ) {}
 
   public async create(params: CreateUserParams): Promise<User> {
-    const createUserParams: Omit<User, 'id'> = {
-      username: params.username,
-      role: UserRole.Regular,
-      hashedPassword: await bcrypt.hash(
-        params.password,
-        await bcrypt.genSalt()
-      ),
-    };
     return this.usersRepository.save(
-      this.usersRepository.create(createUserParams)
+      this.usersRepository.create({
+        username: params.username,
+        role: UserRole.Regular,
+        hashedPassword: await bcrypt.hash(
+          params.password,
+          await bcrypt.genSalt()
+        ),
+      })
     );
   }
 
