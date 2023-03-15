@@ -7,6 +7,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 const userFixture = (seed = '1') => ({
   id: `id-${seed}`,
   username: `username-${seed}`,
+  hashedPassword: `hashed-password-${seed}`,
 });
 
 const usersServiceMock = {
@@ -54,6 +55,7 @@ describe('AuthService', () => {
         expect(service.validate(credentials.username, credentials.password))
           .resolves.toMatchInlineSnapshot(`
           {
+            "hashedPassword": "hashed-password-1",
             "id": "id-1",
             "username": undefined,
           }
