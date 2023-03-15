@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { CreateUserParams } from '../interfaces/create-user-params.interface';
-import { UserRole } from '../types/user-role.enum';
+import { Role } from '../types/role.enum';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +18,7 @@ export class UsersService {
     return this.usersRepository.save(
       this.usersRepository.create({
         username: params.username,
-        role: UserRole.Regular,
+        role: Role.Regular,
         hashedPassword: await bcrypt.hash(
           params.password,
           await bcrypt.genSalt()

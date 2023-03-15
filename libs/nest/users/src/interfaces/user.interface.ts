@@ -1,8 +1,8 @@
 import { Entity } from '@libs/nest/common/database/entity.interface';
-import { UserRole } from '../types/user-role.enum';
+import { Role } from '../types/role.enum';
 
 export interface User extends Entity {
   username: string;
-  role: UserRole;
+  role: Role;
   hashedPassword: string;
 }

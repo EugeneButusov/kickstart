@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../interfaces/user.interface';
-import { UserRole } from '@libs/nest/users/types/user-role.enum';
+import { Role } from '@libs/nest/users/types/role.enum';
 
 export class UserGetDto {
   @ApiProperty()
@@ -9,8 +9,8 @@ export class UserGetDto {
   @ApiProperty()
   username: string;
 
-  @ApiProperty({ enum: UserRole })
-  role: UserRole;
+  @ApiProperty({ enum: Role })
+  role: Role;
 
   constructor(user: User) {
     this.id = user.id;
