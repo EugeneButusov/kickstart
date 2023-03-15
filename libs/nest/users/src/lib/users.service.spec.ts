@@ -2,22 +2,27 @@ import { Test } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserEntity } from '../entities/user.entity';
-
-// TODO: implement factory for fixtures
-const userFixture = (seed = '1') => ({ username: `username-${seed}` });
+import { createUserParamsFixture } from '../../test/fixtures/create-user-params.fixture';
 
 const usersRepositoryMock = {
-  create: jest.fn().mockImplementation(() => ({ ...userFixture() })),
+  create: jest.fn().mockImplementation((entity) => ({
+    ...entity,
+  })),
   save: jest
     .fn()
     .mockImplementation((entity) => ({ ...entity, id: 'test-id' })),
-  findOneById: jest.fn().mockImplementation((id) => ({ ...userFixture(), id })),
+  findOneById: jest.fn().mockImplementation((id) => ({
+    username: createUserParamsFixture().username,
+    id,
+  })),
   findOneBy: jest
     .fn()
     .mockImplementation(({ username }) => ({ id: 'test-id', username })),
   findBy: jest
     .fn()
-    .mockImplementation(() => [{ ...userFixture(), id: 'test-id' }]),
+    .mockImplementation(() => [
+      { id: 'test-id', username: createUserParamsFixture().username },
+    ]),
   update: jest.fn().mockImplementation(() => ({ affected: 1 })),
   delete: jest.fn().mockImplementation(() => ({ affected: 1 })),
 };
@@ -44,17 +49,16 @@ describe('UsersService', () => {
   });
 
   describe('#create', () => {
-    const user = {
-      ...userFixture(),
-      password: 'test-password',
-    };
+    const createUserParams = createUserParamsFixture();
 
     describe('happy path', () => {
       it('should resolve', () =>
-        expect(service.create(user)).resolves.toMatchInlineSnapshot(`
+        expect(service.create(createUserParams)).resolves
+          .toMatchInlineSnapshot(`
           {
+            "hashedPassword": "$2b$10$PYb6o1ZXyEY0SWARyFVS2.4hdp0KRPfFhqdoFH.1NTa4gWvZVHFH6",
             "id": "test-id",
-            "username": "username-1",
+            "username": "testuser-0",
           }
         `));
     });
@@ -68,7 +72,7 @@ describe('UsersService', () => {
         expect(service.findById(userId)).resolves.toMatchInlineSnapshot(`
           {
             "id": "test-id",
-            "username": "username-1",
+            "username": "testuser-0",
           }
         `));
     });
@@ -117,7 +121,7 @@ describe('UsersService', () => {
           [
             {
               "id": "test-id",
-              "username": "username-1",
+              "username": "testuser-0",
             },
           ]
         `));
@@ -138,9 +142,9 @@ describe('UsersService', () => {
 
     describe('happy path', () => {
       it('should resolve to true', () =>
-        expect(service.updateById(userId, userFixture('2'))).resolves.toBe(
-          true
-        ));
+        expect(
+          service.updateById(userId, createUserParamsFixture())
+        ).resolves.toBe(true));
     });
 
     describe('when nothing to update', () => {
@@ -149,9 +153,9 @@ describe('UsersService', () => {
       });
 
       it('should resolve to false', () =>
-        expect(service.updateById(userId, userFixture('2'))).resolves.toBe(
-          false
-        ));
+        expect(
+          service.updateById(userId, createUserParamsFixture())
+        ).resolves.toBe(false));
     });
   });
 
