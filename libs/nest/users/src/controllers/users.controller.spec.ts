@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from '../lib/users.service';
-import * as _ from 'lodash';
+import { createUserParamsFixture } from '../../test/fixtures/create-user-params.fixture';
 
 // TODO: implement factory for fixtures
 const userFixture = (seed = '1') => ({
@@ -36,13 +36,13 @@ describe('UsersController', () => {
   });
 
   describe('#create', () => {
-    const userCreateParams = _.omit(userFixture(), 'id');
+    const createUserParams = createUserParamsFixture();
 
     describe('happy path', () => {
       it('should resolve with user', () =>
-        expect(controller.create(userCreateParams)).resolves
+        expect(controller.create(createUserParams)).resolves
           .toMatchInlineSnapshot(`
-          {
+          UserGetDto {
             "id": "id-1",
             "username": "username-1",
           }
