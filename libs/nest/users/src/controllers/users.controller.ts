@@ -31,7 +31,8 @@ export class UsersController {
   @ApiCreatedResponse({ type: UserGetDto, description: 'Returns created user' })
   async create(@Body() payload: UserCreateDto): Promise<UserGetDto> {
     // TODO: handle duplication errors
-    return this.usersService.create(payload);
+    const user = await this.usersService.create(payload);
+    return UserGetDto.fromUserEntity(user);
   }
 
   @Get('/:id')
