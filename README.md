@@ -9,7 +9,7 @@ Kickstart is a monorepo boilerplate based on TS to start building something cool
 - [X] Backend/API implemented using [NestJS](https://nestjs.com/)
 - [X] [OpenAPI integration](#openapi-integration)
 - [X] [Role-based access control](#role-based-access-control)
-- [ ] Database integration
+- [X] [Database integration](#database-integration)
 - [ ] Authentication/Authorization
 - [X] [User management](#user-management)
 - [ ] Microservices support
