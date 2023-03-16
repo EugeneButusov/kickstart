@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
-import { UsersController } from '../controllers/users.controller';
+import { DefaultUsersController } from '../controllers/default.users.controller';
 import { UsersService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from '../entities/user.entity';
-import { MeController } from '../controllers/me.controller';
+import { MeUsersController } from '../controllers/me.users.controller';
+import { AdminUsersController } from '../controllers/admin.users.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
-  controllers: [MeController, UsersController], // controllers ordering matters
+  // controllers ordering matters
+  controllers: [
+    DefaultUsersController,
+    MeUsersController,
+    AdminUsersController,
+  ],
   providers: [UsersService],
   exports: [UsersService],
 })

@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { CreateUserParams } from '../interfaces/create-user-params.interface';
+import { Role } from '../types/role.enum';
 
 @Injectable()
 export class UsersService {
@@ -14,15 +15,15 @@ export class UsersService {
   ) {}
 
   public async create(params: CreateUserParams): Promise<User> {
-    const createUserParams: Omit<User, 'id'> = {
-      username: params.username,
-      hashedPassword: await bcrypt.hash(
-        params.password,
-        await bcrypt.genSalt()
-      ),
-    };
     return this.usersRepository.save(
-      this.usersRepository.create(createUserParams)
+      this.usersRepository.create({
+        username: params.username,
+        role: Role.Regular,
+        hashedPassword: await bcrypt.hash(
+          params.password,
+          await bcrypt.genSalt()
+        ),
+      })
     );
   }
 

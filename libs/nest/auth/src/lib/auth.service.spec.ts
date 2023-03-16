@@ -2,18 +2,12 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from '@libs/nest/users/lib/users.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-
-// TODO: implement factory for fixtures
-const userFixture = (seed = '1') => ({
-  id: `id-${seed}`,
-  username: `username-${seed}`,
-  hashedPassword: `hashed-password-${seed}`,
-});
+import { userFixture } from '../../test/fixtures/user.fixture';
 
 const usersServiceMock = {
   findByUsernameAndPassword: jest
     .fn()
-    .mockImplementation(({ username }) => ({ ...userFixture(), username })),
+    .mockImplementation((username) => ({ ...userFixture(), username })),
 };
 
 describe('AuthService', () => {
@@ -57,7 +51,8 @@ describe('AuthService', () => {
           {
             "hashedPassword": "hashed-password-1",
             "id": "id-1",
-            "username": undefined,
+            "role": "regular",
+            "username": "test-username",
           }
         `));
     });
@@ -83,6 +78,7 @@ describe('AuthService', () => {
           `
           {
             "iat": Any<Number>,
+            "role": "regular",
             "sub": "id-1",
             "username": "username-1",
           }

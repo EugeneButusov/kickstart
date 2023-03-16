@@ -1,12 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { UsersService } from '../lib/users.service';
-import { MeController } from './me.controller';
-
-// TODO: implement factory for fixtures
-const userFixture = (seed = '1') => ({
-  id: `id-${seed}`,
-  username: `username-${seed}`,
-});
+import { MeUsersController } from './me.users.controller';
+import { userFixture } from '../../test/fixtures/user.fixture';
 
 const usersServiceMock = {
   findById: jest.fn().mockImplementation((id) => ({ ...userFixture(), id })),
@@ -14,15 +9,15 @@ const usersServiceMock = {
 };
 
 describe('MeController', () => {
-  let controller: MeController;
+  let controller: MeUsersController;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [{ provide: UsersService, useValue: usersServiceMock }],
-      controllers: [MeController],
+      controllers: [MeUsersController],
     }).compile();
 
-    controller = module.get(MeController);
+    controller = module.get(MeUsersController);
   });
 
   it('should be defined', () => {
@@ -35,8 +30,9 @@ describe('MeController', () => {
     describe('happy path', () => {
       it('should resolve to entity', () =>
         expect(controller.get(meId)).resolves.toMatchInlineSnapshot(`
-          {
+          UserGetDto {
             "id": "test-id",
+            "role": "regular",
             "username": "username-1",
           }
         `));
