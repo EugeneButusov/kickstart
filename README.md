@@ -5,8 +5,7 @@ Kickstart is a monorepo boilerplate based on TS to start building something cool
 ## Features
 
 - [X] Monorepo based on [NX](https://nx.dev)
-- [X] Docker image build
-  - backend `npx nx docker-build kickstart`
+- [X] [Docker image build](#docker-image-building)
 - [X] OpenAPI integration
 - [ ] Microservices support
 - [ ] Authentication/Authorization
@@ -17,6 +16,12 @@ Kickstart is a monorepo boilerplate based on TS to start building something cool
 - [ ] User management
 - [X] [Role-based access control](#role-based-access-control)
 - [ ] Webhooks support
+
+## Docker image building
+
+### API
+
+To build backend part, simply run `npx nx docker-build kickstart`.
 
 ## Role-based access control
 
