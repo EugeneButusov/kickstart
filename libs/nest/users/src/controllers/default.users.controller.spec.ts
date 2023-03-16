@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { DefaultUsersController } from './default.users.controller';
 import { UsersService } from '../lib/users.service';
 import { createUserParamsFixture } from '../../test/fixtures/create-user-params.fixture';
-import { userFixture } from '../../../auth/test/fixtures/user.fixture';
+import { userFixture } from '../../test/fixtures/user.fixture';
 
 const usersServiceMock = {
   create: jest
