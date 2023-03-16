@@ -6,7 +6,8 @@ Kickstart is a monorepo boilerplate based on TS to start building something cool
 
 - [X] Monorepo based on [NX](https://nx.dev)
 - [X] [Docker image build](#docker-image-building)
-- [X] OpenAPI integration
+- [X] Backend/API implemented using [NestJS](https://nestjs.com/)
+- [X] [OpenAPI integration](#openapi-integration)
 - [ ] Microservices support
 - [ ] Authentication/Authorization
 - [ ] DB integration
@@ -22,6 +23,10 @@ Kickstart is a monorepo boilerplate based on TS to start building something cool
 ### API
 
 To build backend part, simply run `npx nx docker-build kickstart`.
+
+## OpenAPI Integration
+
+This boilerplate supports NestJS built-in OpenAPI/Swagger implementation available at http://localhost:3333/api/.
 
 ## Role-based access control
 
