@@ -33,6 +33,7 @@ describe('JwtStrategy', () => {
         expect(strategy.validate(payload)).resolves.toMatchInlineSnapshot(`
           {
             "id": "test-sub",
+            "role": "regular",
             "username": "test-username",
           }
         `));
