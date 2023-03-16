@@ -7,7 +7,7 @@ import { userFixture } from '../../test/fixtures/user.fixture';
 const usersServiceMock = {
   findByUsernameAndPassword: jest
     .fn()
-    .mockImplementation(({ username }) => ({ ...userFixture(), username })),
+    .mockImplementation((username) => ({ ...userFixture(), username })),
 };
 
 describe('AuthService', () => {
@@ -51,7 +51,8 @@ describe('AuthService', () => {
           {
             "hashedPassword": "hashed-password-1",
             "id": "id-1",
-            "username": undefined,
+            "role": "regular",
+            "username": "test-username",
           }
         `));
     });
@@ -77,6 +78,7 @@ describe('AuthService', () => {
           `
           {
             "iat": Any<Number>,
+            "role": "regular",
             "sub": "id-1",
             "username": "username-1",
           }
