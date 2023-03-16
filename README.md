@@ -10,7 +10,7 @@ Kickstart is a monorepo boilerplate based on TS to start building something cool
 - [X] [OpenAPI integration](#openapi-integration)
 - [X] [Role-based access control](#role-based-access-control)
 - [X] [Database integration](#database-integration)
-- [ ] Authentication/Authorization
+- [X] [Authentication](#authentication)
 - [X] [User management](#user-management)
 - [ ] Microservices support
 - [ ] Pagination
@@ -26,11 +26,11 @@ To build backend part, simply run `npx nx docker-build kickstart`.
 
 ## OpenAPI Integration
 
-This boilerplate supports NestJS built-in OpenAPI/Swagger implementation available at http://localhost:3333/api/.
+Kickstart supports NestJS built-in OpenAPI/Swagger implementation available at http://localhost:3333/api/.
 
 ## Database Integration
 
-This boilerplate has database integration with [TypeORM](https://typeorm.io/). Built-in integration is configured to
+Kickstart has database integration with [TypeORM](https://typeorm.io/). Built-in integration is configured to
 work with [MongoDB](https://www.mongodb.com/). To avoid type-specific discrepancies of primary key in mongodb (
 named `id` and cast to `String`)
 using [MongoDB ObjectIdColumn decorator](libs/nest/common/database/src/mongodb/decorators/object-id-column.decorator.ts).
@@ -44,9 +44,17 @@ export interface Entity {
 
 ```
 
+## Authentication
+
+Kickstart uses [passport](https://www.passportjs.org/) framework for auth under the hood. Current implementation has
+authentication using username/password pair, returning JWT, which can be used in further authorized requests. For more
+details, please refer to OpenAPI docs (section `auth`).
+
+_Sessions and JWT blacklisting is the subject of possible further development._
+
 ## User management
 
-To support user management, this boilerplate has the following basic entity:
+To support user management, Kickstart has the following basic entity:
 
 ```typescript
 export interface User extends Entity {
@@ -58,11 +66,11 @@ export interface User extends Entity {
 
 Kickstart codebase also supports ability to create a user without any authentication, get/update authorized user's
 profile based on passed credentials, get/list/update/delete any user for users having `role === Role.Admin`. For more
-details, please refer to OpenAPI documentation.
+details, please refer to OpenAPI docs (section `users`).
 
 ## Role-based access control
 
-This boilerplate contains integrated RBAC with the following basic `Role` structure, which can be assigned to a user:
+Kickstart contains integrated RBAC with the following basic `Role` structure, which can be assigned to a user:
 
 ```typescript
 export enum Role {
