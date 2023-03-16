@@ -2,13 +2,7 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from '@libs/nest/users/lib/users.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-
-// TODO: implement factory for fixtures
-const userFixture = (seed = '1') => ({
-  id: `id-${seed}`,
-  username: `username-${seed}`,
-  hashedPassword: `hashed-password-${seed}`,
-});
+import { userFixture } from '../../test/fixtures/user.fixture';
 
 const usersServiceMock = {
   findByUsernameAndPassword: jest

@@ -1,5 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { JwtStrategy } from './jwt.strategy';
+import { Role } from '@libs/nest/users/types/role.enum';
 
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;
@@ -25,6 +26,7 @@ describe('JwtStrategy', () => {
     const payload = {
       sub: 'test-sub',
       username: 'test-username',
+      role: Role.Regular,
     };
     describe('happy path', () => {
       it('should resolve correctly', () =>
