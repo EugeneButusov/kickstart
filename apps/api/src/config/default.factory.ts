@@ -11,7 +11,12 @@ export default () => ({
     secure: process.env.APP_SECURE || false,
     globalPrefix: process.env.APP_GLOBAL_PREFIX || 'api',
   },
-  [TypeOrmModule.name]: {},
+  [TypeOrmModule.name]: {
+    type: 'mongodb',
+    url: 'mongodb://localhost:27017/default',
+    autoLoadEntities: true,
+    synchronize: true,
+  },
   [AuthModule.name]: {},
   [UsersModule.name]: {},
 });
