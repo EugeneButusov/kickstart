@@ -14,7 +14,7 @@ const AUTH_MODULE_OPTIONS_TOKEN = Symbol('AUTH_MODULE_OPTIONS_TOKEN');
 
 @Module({})
 export class AuthModule {
-  static forRoot(options: AuthModuleOptions): DynamicModule {
+  static register(options: AuthModuleOptions): DynamicModule {
     return {
       module: AuthModule,
       imports: [
@@ -36,7 +36,7 @@ export class AuthModule {
     };
   }
 
-  static forRootAsync(options: AuthModuleAsyncOptions): DynamicModule {
+  static registerAsync(options: AuthModuleAsyncOptions): DynamicModule {
     return {
       module: AuthModule,
       imports: [

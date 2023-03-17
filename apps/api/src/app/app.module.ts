@@ -18,7 +18,7 @@ import { AuthModuleOptions } from '@libs/nest/auth/interfaces/auth-options.inter
       useFactory: (configService: ConfigService) =>
         configService.get<TypeOrmModuleOptions>(TypeOrmModule.name),
     }),
-    AuthModule.forRootAsync({
+    AuthModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
