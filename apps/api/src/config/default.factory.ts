@@ -1,28 +1,32 @@
 import { AppModule } from '../app/app.module';
-import { UsersModule } from '@libs/nest/users/lib/users.module';
-import { AuthModule } from '@libs/nest/auth/lib/auth.module';
+import { AppConfig } from '../interfaces/app-config.interface';
+import { registerAs } from '@nestjs/config';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm/dist/interfaces/typeorm-options.interface';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { toBoolean } from '@libs/shared/utils/to-boolean.util';
+import { AuthModule } from '@libs/nest/auth/lib/auth.module';
+import { AuthModuleOptions } from '@libs/nest/auth/interfaces/auth-options.interface';
+import { toBoolean, toInt } from '@libs/shared/utils';
 
-export default () => ({
-  [AppModule.name]: {
+export default [
+  registerAs<AppConfig>(AppModule.name, () => ({
     appName: process.env.APP_NAME || 'Kickstart API',
-    port: process.env.APP_PORT,
+    port: toInt(process.env.APP_PORT, 3333),
     host: process.env.APP_HOST,
     secure: toBoolean(process.env.APP_SECURE, false),
     globalPrefix: process.env.APP_GLOBAL_PREFIX || 'api',
-  },
-  [TypeOrmModule.name]: {
+  })),
+
+  registerAs<TypeOrmModuleOptions>(TypeOrmModule.name, () => ({
     type: 'mongodb',
     url: process.env.MONGO_URI,
     autoLoadEntities: true,
     synchronize: toBoolean(process.env.MONGO_SHOULD_SYNCHRONIZE, false),
-  },
-  [AuthModule.name]: {
+  })),
+
+  registerAs<AuthModuleOptions>(AuthModule.name, () => ({
     jwt: {
       secret: process.env.AUTH_JWT_SECRET,
       signOptions: { expiresIn: process.env.AUTH_JWT_EXPIRES_IN },
     },
-  },
-  [UsersModule.name]: {},
-});
+  })),
+];
