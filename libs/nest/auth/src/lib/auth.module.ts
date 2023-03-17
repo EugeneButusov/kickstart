@@ -4,12 +4,17 @@ import { LocalStrategy } from '../strategies/local.strategy';
 import { JwtStrategy } from '../strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthModuleOptions } from '../interfaces/auth-options.interface';
+import {
+  AuthModuleAsyncOptions,
+  AuthModuleOptions,
+} from '../interfaces/auth-options.interface';
 import { UsersModule } from '@libs/nest/users/lib/users.module';
+
+const AUTH_MODULE_OPTIONS_TOKEN = Symbol('AUTH_MODULE_OPTIONS_TOKEN');
 
 @Module({})
 export class AuthModule {
-  static forRoot(options: AuthModuleOptions): DynamicModule {
+  static register(options: AuthModuleOptions): DynamicModule {
     return {
       module: AuthModule,
       imports: [
@@ -25,6 +30,39 @@ export class AuthModule {
         {
           provide: JwtStrategy,
           useFactory: () => new JwtStrategy(options.jwt),
+        },
+      ],
+      exports: [],
+    };
+  }
+
+  static registerAsync(options: AuthModuleAsyncOptions): DynamicModule {
+    return {
+      module: AuthModule,
+      imports: [
+        ...options.imports,
+        UsersModule, // TODO: dependency must be less tough
+        JwtModule.registerAsync({
+          imports: [...options.imports],
+          inject: [...options.inject],
+          useFactory: async (...injects: any[]) =>
+            (await options.useFactory(...injects)).jwt,
+        }),
+      ],
+      controllers: [AuthController],
+      providers: [
+        {
+          provide: AUTH_MODULE_OPTIONS_TOKEN,
+          inject: options.inject,
+          useFactory: options.useFactory,
+        },
+        AuthService,
+        LocalStrategy,
+        {
+          inject: [AUTH_MODULE_OPTIONS_TOKEN],
+          provide: JwtStrategy,
+          useFactory: (authModuleOptions: AuthModuleOptions) =>
+            new JwtStrategy(authModuleOptions.jwt),
         },
       ],
       exports: [],
