@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@nestjs/common': ^9.0.0
+  '@nestjs/config': ^2.3.1
   '@nestjs/core': ^9.0.0
   '@nestjs/jwt': ^10.0.2
   '@nestjs/passport': ^9.0.3
@@ -51,6 +52,7 @@ specifiers:
 
 dependencies:
   '@nestjs/common': 9.3.9_mnr6j2del53muneqly5h4y27ai
+  '@nestjs/config': 2.3.1_jrq2rdgfp2sx67wmylmrqliwxe
   '@nestjs/core': 9.3.9_q6agyr4hwia55oswpsa7zjxcpm
   '@nestjs/jwt': 10.0.2_@nestjs+common@9.3.9
   '@nestjs/passport': 9.0.3_v3ijvyhfbmibt6kvwmic262qla
@@ -1942,6 +1944,22 @@ packages:
       rxjs: 7.8.0
       tslib: 2.5.0
       uid: 2.0.1
+
+  /@nestjs/config/2.3.1_jrq2rdgfp2sx67wmylmrqliwxe:
+    resolution: {integrity: sha512-Ckzel0NZ9CWhNsLfE1hxfDuxJuEbhQvGxSlmZ1/X8awjRmAA/g3kT6M1+MO1SHj1wMtPyUfd9WpwkiqFbiwQgA==}
+    peerDependencies:
+      '@nestjs/common': ^7.0.0 || ^8.0.0 || ^9.0.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^6.0.0 || ^7.2.0
+    dependencies:
+      '@nestjs/common': 9.3.9_mnr6j2del53muneqly5h4y27ai
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
+      lodash: 4.17.21
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      uuid: 9.0.0
+    dev: false
 
   /@nestjs/core/9.3.9_q6agyr4hwia55oswpsa7zjxcpm:
     resolution: {integrity: sha512-9g1A1G9eirLXEpH21rc6dKb08zHc2+adhCRz8NW39hbejcsxxD72FApJzt4QBQAKvu862ixt/tdpStnFT7lOSw==}
@@ -4491,6 +4509,11 @@ packages:
       domelementtype: 2.3.0
       domhandler: 4.3.1
     dev: true
+
+  /dotenv-expand/10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
+    dev: false
 
   /dotenv/10.0.0:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}

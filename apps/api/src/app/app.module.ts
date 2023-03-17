@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from '@libs/nest/users/lib/users.module';
 import { AuthModule } from '@libs/nest/auth/lib/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import configuration from '../config/default.factory';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ load: [configuration] }),
     // TODO: config must be extracted
     TypeOrmModule.forRoot({
       type: 'mongodb',
