@@ -5,7 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 export default () => ({
   [AppModule.name]: {
-    port: process.env.PORT,
+    appName: process.env.APP_NAME || 'Kickstart API',
+    port: process.env.APP_PORT,
+    host: process.env.APP_HOST,
+    secure: process.env.APP_SECURE || false,
+    globalPrefix: process.env.APP_GLOBAL_PREFIX || 'api',
   },
   [TypeOrmModule.name]: {},
   [AuthModule.name]: {},

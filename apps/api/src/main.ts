@@ -1,8 +1,3 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
@@ -13,22 +8,23 @@ import { AppConfig } from './interfaces/app-config.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const configService = app.get(ConfigService);
-  const appConfig = configService.get<AppConfig>(AppModule.name);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+  const appConfig = app.get(ConfigService).get<AppConfig>(AppModule.name);
+
+  app.setGlobalPrefix(appConfig.globalPrefix);
 
   // set up OpenAPI
   const config = new DocumentBuilder()
-    .setTitle('Kickstart API')
+    .setTitle(appConfig.appName)
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(globalPrefix, app, document);
+  SwaggerModule.setup(appConfig.globalPrefix, app, document);
 
   await app.listen(appConfig.port);
   Logger.log(
-    `🚀 Application is running on: http://localhost:${appConfig.port}/${globalPrefix}`
+    `🚀 Application is running on: ${appConfig.secure ? 'https' : 'http'}://${
+      appConfig.host
+    }:${appConfig.port}/${appConfig.globalPrefix}`
   );
 }
 
