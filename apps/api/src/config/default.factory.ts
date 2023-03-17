@@ -15,7 +15,7 @@ export default () => ({
     type: 'mongodb',
     url: process.env.MONGO_URI,
     autoLoadEntities: true,
-    synchronize: process.env.MONGO_SHOULD_SYNCHRONIZE,
+    synchronize: process.env.MONGO_SHOULD_SYNCHRONIZE || false,
   },
   [AuthModule.name]: {
     jwt: {
