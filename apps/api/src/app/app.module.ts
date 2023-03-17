@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import configuration from '../config/default.factory';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm/dist/interfaces/typeorm-options.interface';
+import { AuthModuleOptions } from '@libs/nest/auth/interfaces/auth-options.interface';
 
 @Module({
   imports: [
@@ -17,11 +18,11 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm/dist/interfaces/typeorm-op
       useFactory: (configService: ConfigService) =>
         configService.get<TypeOrmModuleOptions>(TypeOrmModule.name),
     }),
-    AuthModule.forRoot({
-      jwt: {
-        secret: 'my-secret',
-        signOptions: { expiresIn: '60m' },
-      },
+    AuthModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get<AuthModuleOptions>(AuthModule.name),
     }),
     UsersModule,
   ],

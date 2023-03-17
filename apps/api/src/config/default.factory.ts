@@ -17,6 +17,11 @@ export default () => ({
     autoLoadEntities: true,
     synchronize: true,
   },
-  [AuthModule.name]: {},
+  [AuthModule.name]: {
+    jwt: {
+      secret: 'my-secret',
+      signOptions: { expiresIn: '60m' },
+    },
+  },
   [UsersModule.name]: {},
 });

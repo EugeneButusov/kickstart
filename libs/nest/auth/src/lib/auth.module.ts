@@ -4,7 +4,10 @@ import { LocalStrategy } from '../strategies/local.strategy';
 import { JwtStrategy } from '../strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthModuleOptions } from '../interfaces/auth-options.interface';
+import {
+  AuthModuleAsyncOptions,
+  AuthModuleOptions,
+} from '../interfaces/auth-options.interface';
 import { UsersModule } from '@libs/nest/users/lib/users.module';
 
 @Module({})
@@ -30,4 +33,6 @@ export class AuthModule {
       exports: [],
     };
   }
+
+  static forRootAsync(options: AuthModuleAsyncOptions): DynamicModule {}
 }
