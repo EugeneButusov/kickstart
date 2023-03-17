@@ -41,12 +41,12 @@ export class AuthModule {
       module: AuthModule,
       imports: [
         ...options.imports,
-
         UsersModule, // TODO: dependency must be less tough
         JwtModule.registerAsync({
-          inject: [AUTH_MODULE_OPTIONS_TOKEN],
-          useFactory: (authModuleOptions: AuthModuleOptions) =>
-            authModuleOptions.jwt,
+          imports: [...options.imports],
+          inject: [...options.inject],
+          useFactory: async (...injects: any[]) =>
+            (await options.useFactory(...injects)).jwt,
         }),
       ],
       controllers: [AuthController],
