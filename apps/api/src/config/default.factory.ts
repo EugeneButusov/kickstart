@@ -13,14 +13,14 @@ export default () => ({
   },
   [TypeOrmModule.name]: {
     type: 'mongodb',
-    url: 'mongodb://localhost:27017/default',
+    url: process.env.MONGO_URI,
     autoLoadEntities: true,
-    synchronize: true,
+    synchronize: process.env.MONGO_SHOULD_SYNCHRONIZE,
   },
   [AuthModule.name]: {
     jwt: {
-      secret: 'my-secret',
-      signOptions: { expiresIn: '60m' },
+      secret: process.env.AUTH_JWT_SECRET,
+      signOptions: { expiresIn: process.env.AUTH_JWT_EXPIRES_IN },
     },
   },
   [UsersModule.name]: {},
