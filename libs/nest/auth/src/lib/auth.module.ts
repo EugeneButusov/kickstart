@@ -10,6 +10,8 @@ import {
 } from '../interfaces/auth-options.interface';
 import { UsersModule } from '@libs/nest/users/lib/users.module';
 
+const AUTH_MODULE_OPTIONS_TOKEN = Symbol('AUTH_MODULE_OPTIONS_TOKEN');
+
 @Module({})
 export class AuthModule {
   static forRoot(options: AuthModuleOptions): DynamicModule {
@@ -34,5 +36,36 @@ export class AuthModule {
     };
   }
 
-  static forRootAsync(options: AuthModuleAsyncOptions): DynamicModule {}
+  static forRootAsync(options: AuthModuleAsyncOptions): DynamicModule {
+    return {
+      module: AuthModule,
+      imports: [
+        ...options.imports,
+
+        UsersModule, // TODO: dependency must be less tough
+        JwtModule.registerAsync({
+          inject: [AUTH_MODULE_OPTIONS_TOKEN],
+          useFactory: (authModuleOptions: AuthModuleOptions) =>
+            authModuleOptions.jwt,
+        }),
+      ],
+      controllers: [AuthController],
+      providers: [
+        {
+          provide: AUTH_MODULE_OPTIONS_TOKEN,
+          inject: options.inject,
+          useFactory: options.useFactory,
+        },
+        AuthService,
+        LocalStrategy,
+        {
+          inject: [AUTH_MODULE_OPTIONS_TOKEN],
+          provide: JwtStrategy,
+          useFactory: (authModuleOptions: AuthModuleOptions) =>
+            new JwtStrategy(authModuleOptions.jwt),
+        },
+      ],
+      exports: [],
+    };
+  }
 }
