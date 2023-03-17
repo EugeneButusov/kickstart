@@ -19,6 +19,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@libs/shared/*": [
+        "libs/shared/src/*"
+      ],
       "@libs/nest/common/database/*": [
         "libs/nest/common/database/src/*"
       ],
